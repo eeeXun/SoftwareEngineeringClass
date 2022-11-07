@@ -1,4 +1,5 @@
 from flask import Flask
+
 from route.admin import admin_route
 from route.login import login_route
 

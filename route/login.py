@@ -1,4 +1,5 @@
-from flask import Blueprint, render_template, request, redirect
+from flask import Blueprint, redirect, render_template, request
+
 from backend.user import User
 
 login_route = Blueprint("login_route", __name__)
