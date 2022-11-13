@@ -16,15 +16,28 @@ def index():
     return render_template("index.html")
 
 
-@login_route.route("/login/", methods=["GET"])
+@login_route.route("/login/", methods=["POST"])
 def login():
     username = request.values["username"]
     pwd = request.values["pwd"]
     response = User.login(username, pwd)
 
     if response == 1:
-        return redirect("/")
+        # return redirect("/")
+        return "Nice"
     elif response == 0:
         return redirect("/error?msg=Wrong+password")
     else:
         return redirect("/error?msg=This+account+is+not+register")
+
+
+@login_route.route("/register/", methods=["POST"])
+def register():
+    username = request.form["username"]
+    pwd = request.form["pwd"]
+    response = User.register(username, pwd)
+
+    if response == 1:
+        return f"Hello{username}"
+    else:
+        return redirect("/error?msg=Something+wrong!")
