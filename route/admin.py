@@ -5,4 +5,4 @@ admin_route = Blueprint("admin_route", __name__)
 
 @admin_route.route("/admin/", methods=["GET"])
 def admin():
-    return "hello"
+    return render_template("admin.html")
