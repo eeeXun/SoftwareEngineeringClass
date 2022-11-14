@@ -13,3 +13,10 @@ CREATE TABLE
     "amount" INTEGER,
     PRIMARY KEY ("id" AUTOINCREMENT)
   );
+
+CREATE TABLE
+  "cart" (
+    FOREIGN KEY ("user_id") REFERENCE "users" ("id"),
+    FOREIGN KEY ("item_id") REFERENCE "items" ("id"),
+    FOREIGN KEY ("item_amount") REFERENCE "items" ("amount"),
+  );
