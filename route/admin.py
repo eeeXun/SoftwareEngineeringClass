@@ -8,8 +8,7 @@ admin_route = Blueprint("admin_route", __name__)
 @admin_route.route("/admin/", methods=["GET"])
 def admin():
     items = Item.get_all_item()
-    print(items)
-    return render_template("admin.html")
+    return render_template("admin.html", items=items)
 
 
 @admin_route.route("/additem/", methods=["POST"])
