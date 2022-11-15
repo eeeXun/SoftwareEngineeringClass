@@ -11,8 +11,7 @@ class User:
         wrong password return 0
         not register return -1
         """
-        db_file = "test.db"
-        with sqlite3.connect(db_file) as conn:
+        with sqlite3.connect(DBNAME) as conn:
             stmt = "SELECT id, pwd FROM users WHERE username == '{}'".format(
                 username
             )

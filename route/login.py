@@ -18,8 +18,8 @@ def index():
 
 @login_route.route("/login/", methods=["POST"])
 def login():
-    username = request.values["username"]
-    pwd = request.values["pwd"]
+    username = request.form["username"]
+    pwd = request.form["pwd"]
     response = User.login(username, pwd)
 
     if response == 1:
