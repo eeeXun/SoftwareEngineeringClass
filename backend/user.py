@@ -41,3 +41,10 @@ class User:
             conn.execute(stmt, [username, pwd])
             conn.commit()
         return 1
+
+    @staticmethod
+    def get_username(uid):
+        with sqlite3.connect(DBNAME) as conn:
+            stmt = "SELECT username FROM users WHERE id == (?)"
+            username = conn.execute(stmt, [uid]).fetchone()[0]
+            return username

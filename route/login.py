@@ -1,4 +1,4 @@
-from flask import Blueprint, redirect, render_template, request
+from flask import Blueprint, redirect, render_template, request, session
 
 from backend.item import Item
 from backend.user import User
@@ -24,12 +24,19 @@ def login():
     response = User.login(username, pwd)
 
     if response == 1:
-        items = Item.get_all_item()
-        return render_template("user.html", name=username, items=items)
+        return redirect("/page")
     elif response == 0:
         return redirect("/error?msg=Wrong+password")
     else:
         return redirect("/error?msg=This+account+is+not+register")
+
+
+@login_route.route("/page/", methods=["GET", "POST"])
+def page():
+    uid = session.get("id")
+    username = User.get_username(uid)
+    items = Item.get_all_item()
+    return render_template("user.html", name=username, items=items)
 
 
 @login_route.route("/register/", methods=["POST"])
