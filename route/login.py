@@ -1,5 +1,6 @@
 from flask import Blueprint, redirect, render_template, request
 
+from backend.item import Item
 from backend.user import User
 
 login_route = Blueprint("login_route", __name__)
@@ -23,8 +24,8 @@ def login():
     response = User.login(username, pwd)
 
     if response == 1:
-        # return redirect("/")
-        return "Nice"
+        items = Item.get_all_item()
+        return render_template("user.html", name=username, items=items)
     elif response == 0:
         return redirect("/error?msg=Wrong+password")
     else:

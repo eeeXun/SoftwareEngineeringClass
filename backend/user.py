@@ -1,5 +1,7 @@
 import sqlite3
 
+from flask import session
+
 DBNAME = "test.db"
 
 
@@ -17,13 +19,14 @@ class User:
             )
             cursor = conn.cursor()
             cursor.execute(stmt)
-            d = cursor.fetchone()
+            data = cursor.fetchone()
 
-            if not d:
+            if not data:
                 return -1
             else:
-                if d[1] == pwd:
-                    return 0
+                if data[1] == pwd:
+                    session["id"] = data[0]
+                    return 1
                 else:
                     return 0
 
