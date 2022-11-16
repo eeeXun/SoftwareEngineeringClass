@@ -17,8 +17,10 @@ CREATE TABLE
 CREATE TABLE
   "cart" (
     "id" INTEGER,
-    FOREIGN KEY ("user_id") REFERENCE "users" ("id"),
-    FOREIGN KEY ("item_id") REFERENCE "items" ("id"),
-    FOREIGN KEY ("item_amount") REFERENCE "items" ("amount"),
+    "user_id" INTEGER NOT NULL,
+    "item_id" INTEGER NOT NULL,
+    "item_amount" INTEGER NOT NULL,
+    FOREIGN KEY ("user_id") REFERENCES "users" ("id"),
+    FOREIGN KEY ("item_id") REFERENCES "items" ("id"),
     PRIMARY KEY ("id" AUTOINCREMENT)
   );
