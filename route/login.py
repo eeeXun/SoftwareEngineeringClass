@@ -46,6 +46,7 @@ def register():
     response = User.register(username, pwd)
 
     if response == 1:
-        return f"Hello{username}"
+        return f"""<p>{username} register success</p>
+    <a href='/'><button>Back</button></a>"""
     else:
         return redirect("/error?msg=Something+wrong!")
