@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Shopping Cart</title>
+  <title>{{ name }} Shopping Cart</title>
 </head>
 
 <body>
@@ -12,12 +12,21 @@
   <table border="1">
     <tr>
       <th>item</th>
-      <th>amount</th>
+      <th>Total amount</th>
     </tr>
     {% for item in items %}
     <tr>
       <td>{{ item[0] }}</td>
       <td>{{ item[1] }}</td>
+      <form action="/addcart" method="post">
+        <input type="hidden" name="id" value="{{ item[2] }}" />
+        <td>
+          <input type="number" id="amount" name="amount" />
+        </td>
+        <td>
+          <button type="submit">Add</button>
+        </td>
+      </form>
     </tr>
     {% endfor %}
   </table>

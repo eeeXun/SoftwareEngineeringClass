@@ -43,8 +43,17 @@ class User:
         return 1
 
     @staticmethod
-    def get_username(uid):
+    def get_username():
         with sqlite3.connect(DBNAME) as conn:
+            uid = session.get("id")
             stmt = "SELECT username FROM users WHERE id == (?)"
             username = conn.execute(stmt, [uid]).fetchone()[0]
             return username
+
+    @staticmethod
+    def add_cart(item_id, item_amount):
+        with sqlite3.connect(DBNAME) as conn:
+            uid = session.get("id")
+            stmt = "INSERT INTO cart (user_id, item_id, item_amount) VALUES (?, ?, ?);"
+            conn.execute(stmt, [uid, item_id, item_amount])
+            conn.commit()

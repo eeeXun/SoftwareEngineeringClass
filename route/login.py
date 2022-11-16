@@ -33,8 +33,7 @@ def login():
 
 @login_route.route("/page/", methods=["GET", "POST"])
 def page():
-    uid = session.get("id")
-    username = User.get_username(uid)
+    username = User.get_username()
     items = Item.get_all_item()
     return render_template("user.html", name=username, items=items)
 
@@ -50,3 +49,11 @@ def register():
     <a href='/'><button>Back</button></a>"""
     else:
         return redirect("/error?msg=Something+wrong!")
+
+
+@login_route.route("/addcart/", methods=["POST"])
+def add_cart():
+    item_id = request.form["id"]
+    item_amount = request.form["amount"]
+    User.add_cart(item_id, item_amount)
+    return redirect("/page")

@@ -12,11 +12,18 @@ class Item:
             conn.commit()
 
     @staticmethod
+    def delete_item(id):
+        with sqlite3.connect(DBNAME) as conn:
+            stmt = "DELETE FROM items WHERE id = ?;"
+            conn.execute(stmt, [id])
+            conn.commit()
+
+    @staticmethod
     def get_all_item():
         """
-        return (name, amount)
+        return (name, amount, id)
         """
         with sqlite3.connect(DBNAME) as conn:
-            stmt = "SELECT name, amount FROM items;"
+            stmt = "SELECT name, amount, id FROM items;"
             data = conn.execute(stmt).fetchall()
             return data

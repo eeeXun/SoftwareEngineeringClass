@@ -29,6 +29,11 @@
     <tr>
       <td>{{ item[0] }}</td>
       <td>{{ item[1] }}</td>
+      <form action="/deleteitem" method="post">
+        <td>
+          <button name="id" value="{{ item[2] }}">Delete</button>
+        </td>
+      </form>
     </tr>
     {% endfor %}
   </table>

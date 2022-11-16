@@ -12,8 +12,15 @@ def admin():
 
 
 @admin_route.route("/additem/", methods=["POST"])
-def additem():
+def add_item():
     name = request.form["name"]
     amount = request.form["amount"]
     Item.add_item(name, amount)
+    return redirect("/admin")
+
+
+@admin_route.route("/deleteitem/", methods=["POST"])
+def delete_item():
+    item_id = request.form["id"]
+    Item.delete_item(item_id)
     return redirect("/admin")
