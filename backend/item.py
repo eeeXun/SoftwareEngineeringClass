@@ -14,7 +14,7 @@ class Item:
     @staticmethod
     def delete_item(id):
         with sqlite3.connect(DBNAME) as conn:
-            stmt = "DELETE FROM items WHERE id = ?;"
+            stmt = "UPDATE items SET amount=0 WHERE id=?;"
             conn.execute(stmt, [id])
             conn.commit()
 
