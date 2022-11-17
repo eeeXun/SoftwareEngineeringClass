@@ -58,5 +58,6 @@ def register():
 def add_cart():
     item_id = request.form["id"]
     item_amount = request.form["amount"]
-    User.add_cart(item_id, item_amount)
+    if len(item_amount) > 0 and int(item_amount) > 0:
+        User.add_cart(item_id, item_amount)
     return redirect("/page")
