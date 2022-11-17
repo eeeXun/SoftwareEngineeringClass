@@ -57,3 +57,16 @@ class User:
             stmt = "INSERT INTO cart (user_id, item_id, item_amount) VALUES (?, ?, ?);"
             conn.execute(stmt, [uid, item_id, item_amount])
             conn.commit()
+
+    @staticmethod
+    def get_user_cart():
+        """
+        return (cart_id, item_amount, item_name)
+        """
+        with sqlite3.connect(DBNAME) as conn:
+            uid = session.get("id")
+            stmt = """SELECT cart.id, cart.item_amount, items.name
+            FROM (cart LEFT JOIN items on cart.item_id=items.id)
+            WHERE user_id=(?);"""
+            data = conn.execute(stmt, [uid]).fetchall()
+            return data

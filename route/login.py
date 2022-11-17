@@ -35,7 +35,10 @@ def login():
 def page():
     username = User.get_username()
     items = Item.get_all_item()
-    return render_template("user.html", name=username, items=items)
+    carts = User.get_user_cart()
+    return render_template(
+        "user.html", name=username, items=items, carts=carts
+    )
 
 
 @login_route.route("/register/", methods=["POST"])
