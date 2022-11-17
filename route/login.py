@@ -66,3 +66,10 @@ def add_cart():
     ):
         User.add_cart(item_id, item_amount)
     return redirect("/page")
+
+
+@login_route.route("/deletecart/", methods=["POST"])
+def delete_cart():
+    cart_id = request.form["id"]
+    User.delete_cart(cart_id)
+    return redirect("/page")
