@@ -64,5 +64,5 @@ def add_cart():
         and int(item_amount) > 0
         and item_remain >= int(item_amount)
     ):
-        User.add_cart(item_id, item_amount, item_remain)
+        User.add_cart(item_id, item_amount)
     return redirect("/page")
