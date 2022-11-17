@@ -19,11 +19,18 @@ class Item:
             conn.commit()
 
     @staticmethod
+    def get_item_amount(id):
+        with sqlite3.connect(DBNAME) as conn:
+            stmt = "SELECT amount FROM items WHERE id = ?;"
+            data = conn.execute(stmt, [id]).fetchone()[0]
+            return data
+
+    @staticmethod
     def get_all_item():
         """
         return (name, amount, id)
         """
         with sqlite3.connect(DBNAME) as conn:
-            stmt = "SELECT name, amount, id FROM items;"
+            stmt = "SELECT name, amount, id FROM items WHERE amount > 0;"
             data = conn.execute(stmt).fetchall()
             return data

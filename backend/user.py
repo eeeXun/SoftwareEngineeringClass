@@ -51,11 +51,14 @@ class User:
             return username
 
     @staticmethod
-    def add_cart(item_id, item_amount):
+    def add_cart(item_id, item_amount, item_remain):
         with sqlite3.connect(DBNAME) as conn:
             uid = session.get("id")
             stmt = "INSERT INTO cart (user_id, item_id, item_amount) VALUES (?, ?, ?);"
             conn.execute(stmt, [uid, item_id, item_amount])
+            conn.commit()
+            stmt = "UPDATE items SET amount=? WHERE id=?;"
+            conn.execute(stmt, [int(item_remain) - int(item_amount), item_id])
             conn.commit()
 
     @staticmethod
@@ -66,7 +69,7 @@ class User:
         with sqlite3.connect(DBNAME) as conn:
             uid = session.get("id")
             stmt = """SELECT cart.id, cart.item_amount, items.name
-            FROM (cart LEFT JOIN items on cart.item_id=items.id)
+            FROM (cart LEFT JOIN items ON cart.item_id=items.id)
             WHERE user_id=(?);"""
             data = conn.execute(stmt, [uid]).fetchall()
             return data

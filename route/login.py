@@ -1,4 +1,4 @@
-from flask import Blueprint, redirect, render_template, request, session
+from flask import Blueprint, redirect, render_template, request
 
 from backend.item import Item
 from backend.user import User
@@ -58,6 +58,11 @@ def register():
 def add_cart():
     item_id = request.form["id"]
     item_amount = request.form["amount"]
-    if len(item_amount) > 0 and int(item_amount) > 0:
-        User.add_cart(item_id, item_amount)
+    item_remain = int(Item.get_item_amount(item_id))
+    if (
+        len(item_amount) > 0
+        and int(item_amount) > 0
+        and item_remain >= int(item_amount)
+    ):
+        User.add_cart(item_id, item_amount, item_remain)
     return redirect("/page")
