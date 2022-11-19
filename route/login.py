@@ -74,3 +74,9 @@ def buy_cart():
     cart_id = request.form["id"]
     User.buy_cart(cart_id)
     return redirect("/page")
+
+
+@login_route.route("/logout/", methods=["GET", "POST"])
+def logout():
+    session["id"] = False
+    return redirect("/")
