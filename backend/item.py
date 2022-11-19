@@ -34,3 +34,10 @@ class Item:
             stmt = "SELECT name, amount, id FROM items WHERE amount > 0;"
             data = conn.execute(stmt).fetchall()
             return data
+
+    @staticmethod
+    def update_item(item_id, item_name, item_amount):
+        with sqlite3.connect(DBNAME) as conn:
+            stmt = "UPDATE items SET name = ?, amount= ? WHERE id = ?;"
+            conn.execute(stmt, [item_name, item_amount, item_id])
+            conn.commit()

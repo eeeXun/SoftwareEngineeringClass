@@ -24,3 +24,12 @@ def delete_item():
     item_id = request.form["id"]
     Item.delete_item(item_id)
     return redirect("/admin")
+
+
+@admin_route.route("/updateitem/", methods=["POST"])
+def update_item():
+    item_id = request.form["id"]
+    item_name = request.form["name"]
+    item_amount = request.form["amount"]
+    Item.update_item(item_id, item_name, item_amount)
+    return redirect("/admin")

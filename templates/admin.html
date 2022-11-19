@@ -20,6 +20,7 @@
     <input type="number" id="amount" name="amount" /><br />
     <button type="submit">Add</button>
   </form>
+  <h2>All items</h2>
   <table border="1">
     <tr>
       <th>item</th>
@@ -27,8 +28,18 @@
     </tr>
     {% for item in items %}
     <tr>
-      <td>{{ item[0] }}</td>
-      <td>{{ item[1] }}</td>
+      <form action="/updateitem" method="post">
+        <input type="hidden" name="id" value="{{ item[2] }}" />
+        <td>
+          <input type="text" id="name" name="name" value="{{ item[0] }}" />
+        </td>
+        <td>
+          <input type="number" id="amount" name="amount" value="{{ item[1] }}" />
+        </td>
+        <td>
+          <button type="submit">Update</button>
+        </td>
+      </form>
       <form action="/deleteitem" method="post">
         <td>
           <button name="id" value="{{ item[2] }}">Delete</button>
@@ -37,6 +48,7 @@
     </tr>
     {% endfor %}
   </table>
+  <h2>Users cart</h2>
 </body>
 
 </html>
