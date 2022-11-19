@@ -85,3 +85,10 @@ class User:
             WHERE user_id=(?);"""
             data = conn.execute(stmt, [uid]).fetchall()
             return data
+
+    @staticmethod
+    def buy_cart(cart_id):
+        with sqlite3.connect(DBNAME) as conn:
+            stmt = "DELETE FROM cart WHERE id = ?"
+            conn.execute(stmt, [cart_id])
+            conn.commit()

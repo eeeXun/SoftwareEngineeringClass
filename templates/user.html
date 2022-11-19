@@ -48,6 +48,12 @@
           <button type="submit">Delete</button>
         </td>
       </form>
+      <form action="/buycart" method="post">
+        <input type="hidden" name="id" value="{{ cart[0] }}" />
+        <td>
+          <button type="submit">Buy</button>
+        </td>
+      </form>
     </tr>
     {% endfor %}
   </table>
