@@ -49,6 +49,27 @@
     {% endfor %}
   </table>
   <h2>Users cart</h2>
+  <table border="1">
+    <tr>
+      <th>User Name</th>
+      <th>Item Name</th>
+      <th>Amount</th>
+    </tr>
+    {% for cart in carts %}
+    <tr>
+      <td>{{ cart[0] }}</td>
+      <td>{{ cart[1] }}</td>
+      <td>{{ cart[3] }}</td>
+      <form action="/deletecart" method="post">
+        <input type="hidden" name="id" value="{{ cart[2] }}" />
+        <input type="hidden" name="admin" value="1" />
+        <td>
+          <button type="submit">Delete</button>
+        </td>
+      </form>
+    </tr>
+    {% endfor %}
+  </table>
 </body>
 
 </html>

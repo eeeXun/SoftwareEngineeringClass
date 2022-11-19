@@ -1,5 +1,6 @@
 from flask import Blueprint, redirect, render_template, request
 
+from backend.cart import Cart
 from backend.item import Item
 
 admin_route = Blueprint("admin_route", __name__)
@@ -8,7 +9,8 @@ admin_route = Blueprint("admin_route", __name__)
 @admin_route.route("/admin/", methods=["GET"])
 def admin():
     items = Item.get_all_item()
-    return render_template("admin.html", items=items)
+    carts = Cart.get_all_cart()
+    return render_template("admin.html", items=items, carts=carts)
 
 
 @admin_route.route("/additem/", methods=["POST"])

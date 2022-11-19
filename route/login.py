@@ -1,5 +1,6 @@
-from flask import Blueprint, redirect, render_template, request
+from flask import Blueprint, redirect, render_template, request, session
 
+from backend.cart import Cart
 from backend.item import Item
 from backend.user import User
 
@@ -65,13 +66,6 @@ def add_cart():
         and item_remain >= int(item_amount)
     ):
         User.add_cart(item_id, item_amount)
-    return redirect("/page")
-
-
-@login_route.route("/deletecart/", methods=["POST"])
-def delete_cart():
-    cart_id = request.form["id"]
-    User.delete_cart(cart_id)
     return redirect("/page")
 
 

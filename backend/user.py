@@ -62,18 +62,6 @@ class User:
             conn.commit()
 
     @staticmethod
-    def delete_cart(cart_id):
-        with sqlite3.connect(DBNAME) as conn:
-            stmt = """UPDATE items
-            SET amount = amount + (SELECT item_amount FROM cart WHERE id = ?)
-            WHERE id = (SELECT item_id FROM cart WHERE id = ?);"""
-            conn.execute(stmt, [cart_id, cart_id])
-            conn.commit()
-            stmt = "DELETE FROM cart WHERE id = ?;"
-            conn.execute(stmt, [cart_id])
-            conn.commit()
-
-    @staticmethod
     def get_user_cart():
         """
         return (cart_id, item_amount, item_name)
