@@ -37,6 +37,15 @@ def page():
     username = User.get_username()
     items = Item.get_all_item()
     carts = User.get_user_cart()
+    items = sorted(items, key=lambda s: s[1], reverse=True)
+    for i in range(len(items)):
+        print(items[i])
+        if items[i][1] >= 100:
+            items[i] = [items[i][0], items[i][1], items[i][2], "red"]
+        elif items[i][1] >= 50:
+            items[i] = [items[i][0], items[i][1], items[i][2], "blue"]
+        else:
+            items[i] = [items[i][0], items[i][1], items[i][2], "green"]
     return render_template(
         "user.html", name=username, items=items, carts=carts
     )
