@@ -1,0 +1,49 @@
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Game</title>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
+    integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.2.0/socket.io.js"
+    integrity="sha512-WL6WGKMPBiM9PnHRYIn5YEtq0Z8XP4fkVb4qy7PP4vhmYQErJ/dySyXuFIMDf1eEYCXCrQrMJfkNwKc9gsjTjA=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script type="text/javascript" charset="utf-8">
+    $(document).ready(function () {
+      var socket = io.connect();
+
+      socket.on("set_qa", function (data) {
+        $("#set_qa").html(
+          "Question:" + data[0] + "<br>" + "Answer:" + data[1]
+        );
+      });
+
+      $("#set").click(function () {
+        socket.emit("set", [$("#question").val(), $("#answer").val()]);
+        $("#question").val("");
+        $("#answer").val("");
+      });
+    });
+  </script>
+</head>
+
+<body>
+  <form>
+    <fieldset>
+      <legend>Q&A</legend>
+      <label for="question">Question:</label><br />
+      <input type="text" id="question" name="question" /><br />
+      <label for="answer">Answer:</label><br />
+      <input type="text" id="answer" name="answer" /><br />
+      <input type="button" id="set" value="set" />
+    </fieldset>
+  </form>
+  <div id="set_qa"></div>
+</body>
+
+</html>
