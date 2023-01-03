@@ -16,10 +16,19 @@
   <script type="text/javascript" charset="utf-8">
     $(document).ready(function () {
       var socket = io.connect();
+
+      socket.on("set_qa", function (data) {
+        $("#set_qa").html(
+          "Question:" + data[0]
+        );
+      });
     });
   </script>
 </head>
 
-<body></body>
+<body>
+  <h1>Hi {{username}}</h1>
+  <div id="set_qa"></div>
+</body>
 
 </html>

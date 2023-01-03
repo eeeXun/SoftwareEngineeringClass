@@ -18,9 +18,9 @@ def question():
 
 @app.route("/login")
 def login():
-    name = request.values["name"]
-    session["name"] = name
-    return render_template("login.html")
+    username = request.values["username"]
+    session["username"] = username
+    return render_template("login.html", username=username)
 
 
 @socketio.on("set")
@@ -30,4 +30,4 @@ def set(data):
 
 if __name__ == "__main__":
     app.debug = True
-    socketio.run(app)
+    socketio.run(app, host="0.0.0.0")
