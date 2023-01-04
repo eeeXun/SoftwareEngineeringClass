@@ -4,6 +4,7 @@ from flask_socketio import SocketIO
 app = Flask(__name__)
 app.config["SECRET_KEY"] = "ABC"
 socketio = SocketIO(app)
+global answer
 
 
 @app.route("/")
@@ -25,7 +26,19 @@ def login():
 
 @socketio.on("set")
 def set(data):
+    global answer
+    answer = data[1]
     socketio.emit("set_qa", data)
+
+
+@socketio.on("send_message")
+def send_message(data):
+    global answer
+    username = session.get("username")
+    socketio.emit("set_box", f"{username}: {data}<br>")
+
+    if data == answer:
+        socketio.emit("set_box", f"{username} get the answer!<br>")
 
 
 if __name__ == "__main__":

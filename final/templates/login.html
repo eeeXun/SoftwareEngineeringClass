@@ -17,10 +17,17 @@
     $(document).ready(function () {
       var socket = io.connect();
 
+      $("#send_message").click(function () {
+        socket.emit("send_message", $("#message").val());
+        $("#message").val("");
+      });
+
       socket.on("set_qa", function (data) {
-        $("#set_qa").html(
-          "Question:" + data[0]
-        );
+        $("#set_qa").html("<h2>Question:" + data[0] + "</h2>");
+      });
+
+      socket.on("set_box", function (data) {
+        $("#set_box").append(data);
       });
     });
   </script>
@@ -29,6 +36,17 @@
 <body>
   <h1>Hi {{username}}</h1>
   <div id="set_qa"></div>
+  <form>
+    <fieldset>
+      <legend>Your answer</legend>
+      <input type="text" id="message" name="message" />
+      <input type="button" id="send_message" value="send message" />
+    </fieldset>
+    <fieldset>
+      <legend>Box</legend>
+      <div id="set_box"></div>
+    </fieldset>
+  </form>
 </body>
 
 </html>
