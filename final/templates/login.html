@@ -29,6 +29,11 @@
       socket.on("set_box", function (data) {
         $("#set_box").append(data);
       });
+
+      socket.on("message", function (data) {
+        $("#set_box").append(data);
+      });
+
     });
   </script>
 </head>
