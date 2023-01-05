@@ -5,6 +5,7 @@ app = Flask(__name__)
 app.config["SECRET_KEY"] = "ABC"
 socketio = SocketIO(app)
 global answer
+global current_user
 
 
 @app.route("/")
@@ -49,20 +50,34 @@ def set(data):
     )
 
 
+@socketio.on("press_answer")
+def press_answer(data):
+    global current_user
+    username = session.get("username")
+    current_user = username
+    session_id = request.sid
+    socketio.emit("close_answer", username)
+    socketio.emit("open_message", "", room=session_id)
+
+
 @socketio.on("send_message")
 def send_message(data):
     global answer
     username = session.get("username")
     socketio.emit("set_box", f"{username}: {data}<br>")
+    session_id = request.sid
 
     if data == answer:
         socketio.emit("set_box", f"{username} get the answer!<br>")
-        session_id = request.sid
         socketio.emit(
             "set_box",
             "<button><a href='/question'>Go to question page</a></button><br>",
             room=session_id,
         )
+    else:
+        socketio.emit("open_answer", "")
+
+    socketio.emit("close_message", "", room=session_id)
 
 
 if __name__ == "__main__":
