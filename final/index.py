@@ -39,7 +39,6 @@ def send_message(data):
 
     if data == answer:
         socketio.emit("set_box", f"{username} get the answer!<br>")
-        socketio.send("Yes<br>")
 
 
 if __name__ == "__main__":
