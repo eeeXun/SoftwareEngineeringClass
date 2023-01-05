@@ -33,8 +33,20 @@ def question():
 @socketio.on("set")
 def set(data):
     global answer
+    if data == "game_over":
+        answer = None
+        socketio.emit("set_q", "<h2>Game Over!</h2>")
+        socketio.emit("set_qa", "<h2>Game Over!</h2>")
+        return
     answer = data[1]
-    socketio.emit("set_qa", data)
+    socketio.emit(
+        "set_q",
+        f"<h2>Question:{data[0]}</h2>",
+    )
+    socketio.emit(
+        "set_qa",
+        f"<h2>Question:{data[0]}</h2><h2>Answer:{data[1]}</h2>",
+    )
 
 
 @socketio.on("send_message")

@@ -22,8 +22,8 @@
         $("#message").val("");
       });
 
-      socket.on("set_qa", function (data) {
-        $("#set_qa").html("<h2>Question:" + data[0] + "</h2>");
+      socket.on("set_q", function (data) {
+        $("#set_qa").html(data);
       });
 
       socket.on("set_box", function (data) {
