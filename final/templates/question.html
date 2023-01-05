@@ -17,16 +17,20 @@
     $(document).ready(function () {
       var socket = io.connect();
 
+      $("#set").click(function () {
+        socket.emit("set", [$("#question").val(), $("#answer").val()]);
+        $("#question").val("");
+        $("#answer").val("");
+      });
+
       socket.on("set_qa", function (data) {
         $("#set_qa").html(
           "Question:" + data[0] + "<br>" + "Answer:" + data[1]
         );
       });
 
-      $("#set").click(function () {
-        socket.emit("set", [$("#question").val(), $("#answer").val()]);
-        $("#question").val("");
-        $("#answer").val("");
+      socket.on("set_box", function (data) {
+        $("#set_box").append(data);
       });
     });
   </script>
@@ -44,6 +48,10 @@
     </fieldset>
   </form>
   <div id="set_qa"></div>
+  <fieldset>
+    <legend>Box</legend>
+    <div id="set_box"></div>
+  </fieldset>
 </body>
 
 </html>

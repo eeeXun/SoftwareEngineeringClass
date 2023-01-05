@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, session
+from flask import Flask, redirect, render_template, request, session
 from flask_socketio import SocketIO
 
 app = Flask(__name__)
@@ -12,16 +12,22 @@ def index():
     return render_template("index.html")
 
 
-@app.route("/question")
-def question():
-    return render_template("question.html")
+@app.route("/redirect_login")
+def redirect_login():
+    username = request.values["username"]
+    session["username"] = username
+    return redirect("/login")
 
 
 @app.route("/login")
 def login():
-    username = request.values["username"]
-    session["username"] = username
+    username = session.get("username")
     return render_template("login.html", username=username)
+
+
+@app.route("/question")
+def question():
+    return render_template("question.html")
 
 
 @socketio.on("set")
@@ -42,7 +48,7 @@ def send_message(data):
         session_id = request.sid
         socketio.emit(
             "set_box",
-            "<button><a href='/question'>Go to question page</a></button>",
+            "<button><a href='/question'>Go to question page</a></button><br>",
             room=session_id,
         )
 
