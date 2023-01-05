@@ -39,6 +39,12 @@ def send_message(data):
 
     if data == answer:
         socketio.emit("set_box", f"{username} get the answer!<br>")
+        session_id = request.sid
+        socketio.emit(
+            "set_box",
+            "<button><a href='/question'>Go to question page</a></button>",
+            room=session_id,
+        )
 
 
 if __name__ == "__main__":
